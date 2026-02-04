@@ -1,0 +1,78 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculateur de prix d'éthanol</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #resultat {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Prix par litre d'éthanol</h2>
+    <label for="prix">Prix (€):</label>
+    <input type="number" id="prix" step="0.01">
+
+    <label for="volume">Volume (en litres):</label>
+    <input type="number" id="volume" step="0.01">
+
+    <label for="degre">Degré d'alcool (%):</label>
+    <input type="number" id="degre" step="0.1">
+
+    <button onclick="calculer()">Calculer</button>
+
+    <div id="resultat"></div>
+
+    <script>
+        function calculer() {
+            const prix = parseFloat(document.getElementById('prix').value);
+            const volume = parseFloat(document.getElementById('volume').value);
+            const degre = parseFloat(document.getElementById('degre').value);
+
+            if (isNaN(prix) || isNaN(volume) || isNaN(degre) || volume <= 0 || degre < 0) {
+                document.getElementById('resultat').textContent = "Veuillez entrer des valeurs valides.";
+                return;
+            }
+
+            const volumeEthanol = volume * (degre / 100);
+            const prixEthanol = volumeEthanol > 0 ? prix / volumeEthanol : Infinity;
+
+            document.getElementById('resultat').textContent =
+                `Prix au litre d'éthanol : ${prixEthanol.toFixed(2)} €`;
+        }
+    </script>
+</body>
+</html>
